@@ -12,4 +12,4 @@ const Views = () => {
   )
 }
 
-export default Views
+export default Views;
