@@ -1,5 +1,5 @@
 {
-  "name": "real-time-chat-app",
+  "name": "@real-time-chat-app/client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,7 +12,7 @@
     "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
-    "yup": "^1.4.0"
+    "@real-time-chat-app/common": "1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
