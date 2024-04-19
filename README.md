@@ -30,12 +30,14 @@ This project was inspired by the tutorials provided by Lester Fernandez on his [
 To get started with this project, follow these steps:
 
 1. Clone this repository to your local machine.
-2. Install dependencies using `yarn install`.
+2. Install dependencies using `yarn` in the client and server folders in the packages directory.
 3. Set up PostgreSQL and Redis databases.
 4. Configure environment variables for database connections and other settings.
 5. Start the backend server using `yarn dev` after navigating to the server directory.
 6. Start the frontend development server using `yarn start` after navigating to the client directory.
 7. Access the application in your browser at `http://localhost:3000`.
+
+Note: If there is an error with installing dependencies for the "@real-time-chat-app/common" package, cd into the packages/common directory and type yarn link in the terminal. Then go to the packages/client and packages/server directory and type yarn link "@real-time-chat-app/common". However, this should not be a problem as the package.json in both client and server folders refer to a local package using the "file:/PATH" convention. If I were to use the package directly, I would need to upload it to the yarn/npm registry.
 
 ## Contributing
 
