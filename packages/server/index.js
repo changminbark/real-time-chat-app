@@ -3,6 +3,8 @@ const { Server } = require("socket.io");
 const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
+const session = require("express-session");
+require("dotenv").config();
 
 // Basically, this creates an express app/server, which is passed as an argument to the HTTP server, which is passed as an argument to the
 // socket.io server. Any requests that are sent to the server will ultimately end up reaching the express app
@@ -29,6 +31,31 @@ app.use(
   })
 );
 app.use(express.json());
+
+// This middleware is related to creating sessions and using cookies to store session data. There is a code in the cookie and sending
+// a request to the server, express-session detects this code and gets the user information from the code. The code should be randomized.
+// The cookie name "sid" stands for session id. It does not save the session for no reason. It only saves when there are changes.
+// The saveUnitialized makes sure that there is no cookie when the user is not logged in.
+// The secure property of the cookie makes sure it is set through https, but testing is in http so the production allows you to test the
+// cookie even in development.
+// The sameSite property determines whether the cookie will be communicated through different domains or not. If it is set to none, it is
+// required for secure to be true.
+// The cookie is pretty much the "key" to a value in a dictionary, which is the req.session values. Express-session saves that dictionary
+// every time a response is sent.
+app.use(
+  session({
+    secret: process.env.COOKIE_SECRET,
+    credentials: true,
+    name: "sid",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.ENVIRONMENT === "production",
+      httpOnly: true,
+      sameSite: process.env.ENVIRONMENT === "production" ? "none" : "lax",
+    },
+  })
+);
 
 // This is the middleware for authenticating/validating the user's login and signup
 app.use("/auth", authRouter);
