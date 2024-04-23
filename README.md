@@ -24,6 +24,7 @@ This project was inspired by the tutorials provided by Lester Fernandez on his [
 - **Helmet**: Middleware-based technology that fortifies the security of HTTP headers returned by a Node.js application, enhancing overall protection.
 - **CORS**: Facilitates Cross-Origin Resource Sharing, enabling secure communication between client-side and server-side components, ensuring seamless integration and interaction across different domains.
 - **Yup**: Empowers validation in JavaScript applications, ensuring data integrity and accuracy by defining and enforcing schema constraints, thereby enhancing overall data reliability and consistency.
+- **pg**: Non-blocking PostgreSQL client for Node.js
 
 ## Getting Started
 
@@ -31,7 +32,7 @@ To get started with this project, follow these steps:
 
 1. Clone this repository to your local machine.
 2. Install dependencies using `yarn` in the client and server folders in the packages directory.
-3. Set up PostgreSQL and Redis databases.
+3. Set up PostgreSQL and Redis databases. Make sure to set up your own databases. The NOTES.md file has some instructions for this.
 4. Configure environment variables for database connections and other settings.
 5. Start the backend server using `yarn dev` after navigating to the server directory.
 6. Start the frontend development server using `yarn start` after navigating to the client directory.

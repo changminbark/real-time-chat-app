@@ -27,7 +27,7 @@ const SignUp = () => {
         const vals = { ...values };
         actions.resetForm();
         // This fetch POST request that is sent to the backend includes cookies/credentials and the headers tells the backend JSON is being sent
-        fetch("http://localhost:4000/auth/register", {
+        fetch("http://localhost:4000/auth/signup", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -71,6 +71,7 @@ const SignUp = () => {
           placeholder="Enter password"
           autoComplete="off"
           label="Password"
+          type="password"
         />
 
         <ButtonGroup pt="1rem">

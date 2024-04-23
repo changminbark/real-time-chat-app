@@ -1,7 +1,7 @@
 const { formSchema } = require("@real-time-chat-app/common");
 
 // This is a middleware for validating the form
-const validateForm = (req, res) => {
+const validateForm = (req, res, next) => {
   const formData = req.body;
   formSchema
     .validate(formData)
@@ -14,7 +14,7 @@ const validateForm = (req, res) => {
     .then((valid) => {
       if (valid) {
         // console.log("Form is good");
-        next();
+        // res.status(200).send();
       } else {
         res.status(422).send();
       }
