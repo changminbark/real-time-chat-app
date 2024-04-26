@@ -6,40 +6,51 @@ const bcrypt = require("bcrypt");
 
 // LOGIN ROUTE
 // This is the validation route that checks whether the data being sent is valid according to the schema in the validateForm controller
-router.post("/login", async (req, res) => {
-  validateForm(req, res);
-
-  // Testing cookie
-  console.log(req.session);
-
-  const potentialLogin = await pool.query(
-    "SELECT id, username, passhash FROM users u WHERE u.username=$1",
-    [req.body.username]
-  );
-
-  if (potentialLogin.rowCount > 0) {
-    const isSamePass = await bcrypt.compare(
-      req.body.password,
-      potentialLogin.rows[0].passhash
-    );
-    if (isSamePass) {
-      // Login
-      req.session.user = {
-        username: req.body.username,
-        id: potentialLogin.rows[0].id,
-      };
-      res.json({ loggedIn: true, username: req.body.username });
-
-      console.log("logged in");
+router
+  .route("/login")
+  // This checks whether it's already logged in (cookie session)
+  .get(async (req, res) => {
+    if (req.session.user && req.session.user.username) {
+      res.json({ loggedIn: true, username: req.session.username });
     } else {
-      // Bad login due to wrong password
+      res.json({ loggedIn: false });
+    }
+  })
+  // This logs the user in if not already logged in
+  .post(async (req, res) => {
+    validateForm(req, res);
+
+    // Testing cookie
+    console.log(req.session);
+
+    const potentialLogin = await pool.query(
+      "SELECT id, username, passhash FROM users u WHERE u.username=$1",
+      [req.body.username]
+    );
+
+    if (potentialLogin.rowCount > 0) {
+      const isSamePass = await bcrypt.compare(
+        req.body.password,
+        potentialLogin.rows[0].passhash
+      );
+      if (isSamePass) {
+        // Login
+        req.session.user = {
+          username: req.body.username,
+          id: potentialLogin.rows[0].id,
+        };
+        res.json({ loggedIn: true, username: req.body.username });
+
+        console.log("logged in");
+      } else {
+        // Bad login due to wrong password
+        res.json({ loggedIn: false, status: "Wrong username or password!" });
+      }
+    } else {
+      // Bad login due to username not existing
       res.json({ loggedIn: false, status: "Wrong username or password!" });
     }
-  } else {
-    // Bad login due to username not existing
-    res.json({ loggedIn: false, status: "Wrong username or password!" });
-  }
-});
+  });
 
 // SIGNUP ROUTE
 router.post("/signup", async (req, res) => {

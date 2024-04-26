@@ -7,6 +7,7 @@ import {
   FormErrorMessage,
   Input,
   Heading,
+  Text,
 } from "@chakra-ui/react";
 import { Form, Formik, useFormik } from "formik";
 import * as Yup from "yup";
@@ -14,13 +15,14 @@ import TextField from "./TextField";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { formSchema } from "@real-time-chat-app/common";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AccountContext } from "../AccountContext";
 
 // For the long way of using formik and the useFormik function, check out the video or look at the documentation
 
 const SignUp = () => {
   const { setUser } = useContext(AccountContext);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   return (
     <Formik
@@ -51,7 +53,12 @@ const SignUp = () => {
             if (!data) return;
             // We are saving the users here where the loggedIn property is set to true using the context hook.
             setUser({ ...data });
-            navigate("/home");
+            // If there is a status code
+            if (data.status) {
+              setError(data.status);
+            } else if (data.loggedIn) {
+              navigate("/home");
+            }
           });
       }}
     >
@@ -64,6 +71,9 @@ const SignUp = () => {
         spacing="1rem"
       >
         <Heading>Sign Up</Heading>
+        <Text as="p" color="red.500">
+          {error}
+        </Text>
         <TextField
           name="username"
           placeholder="Enter username"
