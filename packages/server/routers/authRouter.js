@@ -4,6 +4,7 @@ const router = express.Router();
 const pool = require("../db");
 const bcrypt = require("bcrypt");
 
+// LOGIN ROUTE
 // This is the validation route that checks whether the data being sent is valid according to the schema in the validateForm controller
 router.post("/login", async (req, res) => {
   validateForm(req, res);
@@ -40,6 +41,7 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// SIGNUP ROUTE
 router.post("/signup", async (req, res) => {
   // This validates the signup form inputs
   validateForm(req, res);

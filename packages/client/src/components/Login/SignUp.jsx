@@ -14,10 +14,13 @@ import TextField from "./TextField";
 import { useNavigate } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { formSchema } from "@real-time-chat-app/common";
+import { useContext } from "react";
+import { AccountContext } from "../AccountContext";
 
 // For the long way of using formik and the useFormik function, check out the video or look at the documentation
 
 const SignUp = () => {
+  const { setUser } = useContext(AccountContext);
   const navigate = useNavigate();
   return (
     <Formik
@@ -46,7 +49,9 @@ const SignUp = () => {
           })
           .then((data) => {
             if (!data) return;
-            console.log(data);
+            // We are saving the users here where the loggedIn property is set to true using the context hook.
+            setUser({ ...data });
+            navigate("/home");
           });
       }}
     >
