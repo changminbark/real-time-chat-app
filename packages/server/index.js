@@ -4,6 +4,10 @@ const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
 const session = require("express-session");
+// Redis here is a class
+const Redis = require("ioredis");
+// This configures connect-redis to use express session
+const RedisStore = require("connect-redis").default;
 require("dotenv").config();
 
 // Basically, this creates an express app/server, which is passed as an argument to the HTTP server, which is passed as an argument to the
@@ -18,6 +22,9 @@ const io = new Server(server, {
     credentials: "true",
   },
 });
+
+// This instance of the Redis class/client will be what communicates with the redis server
+const redisClient = new Redis();
 
 // Middleware is anything run between the beginning and end of the request/response cycle.
 // Middleware passed through the express.js server. Every request that goes through the express app has to go through any program
@@ -42,11 +49,17 @@ app.use(express.json());
 // required for secure to be true.
 // The cookie is pretty much the "key" to a value in a dictionary, which is the req.session values. Express-session saves that dictionary
 // every time a response is sent.
+// This method of storing the session in memory is not recommended for production-level development as it can cause memory leaks and
+// the session is lost every time the program restarts.
+//
+// One of the most popular session stores is to use redis for persistent sessions.
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,
     credentials: true,
     name: "sid",
+    // This sets the storage to the new Redis Storage using the redisClient to communicate with the storage.
+    store: new RedisStore({ client: redisClient }),
     resave: false,
     saveUninitialized: false,
     cookie: {

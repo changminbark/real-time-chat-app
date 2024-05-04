@@ -25,6 +25,8 @@ This project was inspired by the tutorials provided by Lester Fernandez on his [
 - **CORS**: Facilitates Cross-Origin Resource Sharing, enabling secure communication between client-side and server-side components, ensuring seamless integration and interaction across different domains.
 - **Yup**: Empowers validation in JavaScript applications, ensuring data integrity and accuracy by defining and enforcing schema constraints, thereby enhancing overall data reliability and consistency.
 - **pg**: Non-blocking PostgreSQL client for Node.js
+- **ioredis**: A robust, performance-focused and full-featured Redis client for Node.js.
+- **connect-redis**: The connect-redis module provides Redis session storage for Express.
 
 ## Getting Started
 
