@@ -4,8 +4,8 @@ const helmet = require("helmet");
 const cors = require("cors");
 const authRouter = require("./routers/authRouter");
 const session = require("express-session");
-// Redis here is a class
-const Redis = require("ioredis");
+const redisClient = require("./redis");
+
 // This configures connect-redis to use express session
 const RedisStore = require("connect-redis").default;
 require("dotenv").config();
@@ -22,9 +22,6 @@ const io = new Server(server, {
     credentials: "true",
   },
 });
-
-// This instance of the Redis class/client will be what communicates with the redis server
-const redisClient = new Redis();
 
 // Middleware is anything run between the beginning and end of the request/response cycle.
 // Middleware passed through the express.js server. Every request that goes through the express app has to go through any program

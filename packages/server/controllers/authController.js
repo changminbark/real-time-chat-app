@@ -13,7 +13,7 @@ module.exports.handleLogin = (req, res) => {
 
 module.exports.attemptLogin = async (req, res) => {
   // Testing cookie
-  console.log(req.session);
+  // console.log(req.session);
 
   const potentialLogin = await pool.query(
     "SELECT id, username, passhash FROM users u WHERE u.username=$1",
@@ -62,7 +62,7 @@ module.exports.attemptRegister = async (req, res) => {
       [req.body.username, hashedPass]
     );
 
-    console.log(newUserQuery);
+    // console.log(newUserQuery);
 
     req.session.user = {
       username: req.body.username,

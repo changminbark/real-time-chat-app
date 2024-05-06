@@ -12,7 +12,7 @@ const validateForm = (req, res, next) => {
     })
     .then((valid) => {
       if (valid) {
-        // console.log("Form is good");
+        console.log("Form is good");
         next();
       } else {
         res.status(422).send();
