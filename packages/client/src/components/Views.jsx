@@ -5,6 +5,7 @@ import { Text } from "@chakra-ui/react";
 import PrivateRoutes from "./PrivateRoutes";
 import { useContext } from "react";
 import { AccountContext } from "./AccountContext";
+import Home from "./Home/Home";
 
 const Views = () => {
   // Uses the context for checking whether user is logged in
@@ -16,7 +17,7 @@ const Views = () => {
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<SignUp />} />
       <Route element={<PrivateRoutes />}>
-        <Route path="/home" element={<Text>Hi welcome home</Text>} />
+        <Route path="/home" element={<Home />} />
       </Route>
       <Route path="*" element={<Login />} />
     </Routes>
